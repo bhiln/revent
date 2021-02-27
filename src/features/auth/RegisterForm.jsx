@@ -6,33 +6,36 @@ import MyTextInput from '../../app/common/form/myTextInput';
 import { Button, Divider, Label } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import { closeModal } from '../../app/common/modals/modalReducer';
-import { signInWithEmail } from '../../app/firestore/firebaseService';
+import {
+  registerInFirebase,
+  signInWithEmail,
+} from '../../app/firestore/firebaseService';
 import SocialLogin from './socialLogin';
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const dispatch = useDispatch();
   return (
-    <ModalWrapper size='mini' header='Sign in to Revents'>
+    <ModalWrapper size='mini' header='Register to Revents'>
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ displayName: '', email: '', password: '' }}
         validationSchema={Yup.object({
+          displayName: Yup.string().required(),
           email: Yup.string().required().email(),
           password: Yup.string().required(),
         })}
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
-            await signInWithEmail(values);
+            await registerInFirebase(values);
             setSubmitting(false);
             dispatch(closeModal());
           } catch (error) {
-            setErrors({
-              auth: 'Cannot log in, problem with username or password.',
-            });
+            setErrors({ auth: error.message });
             setSubmitting(false);
           }
         }}>
         {({ isSubmitting, isValid, dirty, errors }) => (
           <Form className='ui form'>
+            <MyTextInput name='displayName' placeholder='DisplayName' />
             <MyTextInput name='email' placeholder='EmailAddress' type='email' />
             <MyTextInput
               name='password'
@@ -54,7 +57,7 @@ export default function LoginForm() {
               fluid
               size='large'
               color='teal'
-              content='Login'
+              content='Register'
             />
             <Divider horizontal>Or</Divider>
             <SocialLogin />

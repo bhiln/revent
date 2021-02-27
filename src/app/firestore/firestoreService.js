@@ -37,7 +37,7 @@ export function addEventToFirestore(event) {
     attendees: firebase.firestore.FieldValue.arrayUnion({
       id: cuid(),
       displayName: 'Diana',
-      photoRUL: 'https://randomuser.me/api/portraits/women/20.jpg',
+      photoURL: 'https://randomuser.me/api/portraits/women/20.jpg',
     }),
   });
 }
@@ -54,4 +54,16 @@ export function cancelEventToggle(event) {
   return db.collection('events').doc(event.id).update({
     isCancelled: !event.isCancelled,
   });
+}
+
+export function setUserProfileData(user) {
+  return db
+    .collection('users')
+    .doc(user.uid)
+    .set({
+      displayName: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL || null,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
 }
