@@ -5,11 +5,11 @@ import { Link, Redirect } from 'react-router-dom';
 import { Button, Confirm, Header, Segment } from 'semantic-ui-react';
 import { listenToEvents } from '../eventActions';
 import * as Yup from 'yup';
-import MyTextInput from '../../../app/common/form/myTextInput';
-import MyTextArea from '../../../app/common/form/myTextArea';
-import MySelectInput from '../../../app/common/form/mySelectInput';
+import MyTextInput from '../../../app/common/form/MyTextInput';
+import MyTextArea from '../../../app/common/form/MyTextArea';
+import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryData } from '../../../app/api/categoryOptions';
-import MyDateInput from '../../../app/common/form/myDateInput';
+import MyDateInput from '../../../app/common/form/MyDateInput';
 import useFirestoreDoc from '../../../app/hooks/useFirestoreDoc';
 import {
   addEventToFirestore,

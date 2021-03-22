@@ -65,5 +65,33 @@ export function setUserProfileData(user) {
       email: user.email,
       photoURL: user.photoURL || null,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      isBanned: false,
+      isStudent: false,
+      isTutor: false,
+      rating: -1,
+      courses: {
+        student: {},
+        tutor: {},
+      },
+      institutions: {},
     });
+}
+
+export function getUserProfile(userID) {
+  console.log(userID);
+  return db.collection('users').doc(userID);
+}
+
+export async function updateUserProfile(profile) {
+  const user = firebase.auth().currentUser;
+  try {
+    if (user.displayName !== profile.displayName) {
+      await user.updateProfile({
+        displayName: profile.displayName,
+      });
+    }
+    return await db.collection('users').doc(user.uid).update(profile);
+  } catch (error) {
+    throw error;
+  }
 }

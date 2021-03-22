@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Header, Label, Segment } from 'semantic-ui-react';
 import * as Yup from 'yup';
-import MyTextInput from '../../app/common/form/myTextInput';
+import MyTextInput from '../../app/common/form/MyTextInput';
 import { updateUserPassword } from '../../app/firestore/firebaseService';
 
 export default function AccountPage() {

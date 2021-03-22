@@ -3,12 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import { openModal } from '../../app/common/modals/modalReducer';
 import { decrement, increment } from './testReducer';
+import { socialLogin } from '../../app/firestore/firebaseService';
 
 export default function Sandbox() {
   const dispatch = useDispatch();
   const [target, setTarget] = useState(null);
   const data = useSelector((state) => state.test.data);
   const { loading } = useSelector((state) => state.async);
+  function handleSocialLogin(provider) {
+    // dispatch(closeModal());
+    socialLogin(provider);
+  }
   return (
     <>
       <h1>Testing 123</h1>
@@ -39,6 +44,13 @@ export default function Sandbox() {
         }
         content='Open Modal'
         color='teal'
+      />
+      <Button
+        onClick={() => handleSocialLogin('google')}
+        icon='google'
+        fluid
+        color='google plus'
+        content='Login with Google'
       />
     </>
   );
